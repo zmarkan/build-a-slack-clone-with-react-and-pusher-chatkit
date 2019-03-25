@@ -42,7 +42,7 @@ class Message extends Component {
         let hasLink = message.parts.length > 1
         let link = ""
         if (hasLink && this.state.linkEmbed.length <= 0 ) {
-            link = encodeURIComponent(message.parts[1].payload.url) 
+            link = encodeURIComponent(message.parts[1].payload.url)
             let iframelyAPICall = `https://iframe.ly/api/oembed?api_key=2ca0506ea6b3b12f93913b&iframe=1&omit_script=1&url=${link}`
 
             console.log(iframelyAPICall)
@@ -53,7 +53,7 @@ class Message extends Component {
                 this.setState({ linkEmbed: response.html })
             }
         )
-        } 
+        }
 
         return (
             <div>
@@ -74,4 +74,3 @@ class Message extends Component {
 }
 
 export default Message
-
