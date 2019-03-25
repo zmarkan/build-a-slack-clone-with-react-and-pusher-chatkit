@@ -38,16 +38,25 @@ class ChatScreen extends Component {
       roomId: this.state.currentRoom.id,
       parts: message
     })
+  }
 
-    // // const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
-    // // let linkIndex = text.search(urlRegex)
-    // // let link = text.search(urlRegex)
-    
+  showNotification(presenceUpdate) {
+    console.log(presenceUpdate)
 
-    // this.state.currentUser.sendMessage({
-    //   text,
-    //   roomId: this.state.currentRoom.id,
-    // })
+    debugger
+    if (
+      'Notification' in window &&
+      presenceUpdate.state.current === 'online' &&
+      document.visibilityState === 'hidden'
+    ) {
+      const notification = new Notification(
+        `User ${presenceUpdate.user.id} just logged in to chat!`,
+      )
+      notification.addEventListener('click', e => {
+        window.focus()
+      })
+    }
+
   }
 
   componentDidMount() {
@@ -65,29 +74,32 @@ class ChatScreen extends Component {
         this.setState({ currentUser })
         return currentUser.subscribeToRoomMultipart({
           roomId: "19389919",
-          messageLimit: 100,
+          messageLimit: 20,
           hooks: {
             onMessage: message => {
               this.setState({
                 messages: [...this.state.messages, message]
               })
             },
-            // onUserStartedTyping: user => {
-            //   this.setState({
-            //     usersWhoAreTyping: [
-            //       ...this.state.usersWhoAreTyping,
-            //       user.name
-            //     ]
-            //   })
-            // },
-            // onUserStoppedTyping: user => {
-            //   this.setState({
-            //     usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
-            //       username => username !== user.name
-            //     )
-            //   })
-            // },
-            onPresenceChange: () => this.forceUpdate(),
+            onUserStartedTyping: user => {
+              this.setState({
+                usersWhoAreTyping: [
+                  ...this.state.usersWhoAreTyping,
+                  user.name
+                ]
+              })
+            },
+            onUserStoppedTyping: user => {
+              this.setState({
+                usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
+                  username => username !== user.name
+                )
+              })
+            },
+            onPresenceChanged: (state, user) => {
+              this.showNotification({state, user})
+              this.forceUpdate()
+            },
             onUserJoined: () => this.forceUpdate()
           }
         })
