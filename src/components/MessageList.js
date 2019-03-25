@@ -2,6 +2,19 @@ import React, { Component } from 'react'
 import Message from './Message'
 
 class MessagesList extends Component {
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
   render() {
     const styles = {
       container: {
@@ -34,6 +47,9 @@ class MessagesList extends Component {
             </li>
           ))}
         </ul>
+        <div style={ { float: "left", clear: "both" } }
+          ref={ (el) => { this.messagesEnd = el; } }>
+        </div>
       </div>
     )
   }

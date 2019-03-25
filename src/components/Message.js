@@ -55,16 +55,6 @@ class Message extends Component {
         )
         } 
 
-       
-
-        // fetch(iframelyAPICall).then( response => 
-        //   response.json() 
-        // ).then( json =>
-        //   json.html)
-
-        // )
-
-
         return (
             <div>
 
@@ -82,17 +72,6 @@ class Message extends Component {
     }
 
 }
-
-//https://www.investing.com/news/stock-market-news/airbus-close-to-signing-aircraft-deal-with-china-sources-1817279
-
-// {
-//     "status": 422,
-//         "error": "Ivalid value of `uri`: http://undefined"
-// }
-
-//iframe.ly/api/oembed?api_key=2ca0506ea6b3b12f93913b&iframe=1&omit_script=1&url=undefined
-
-
 
 export default Message
 
