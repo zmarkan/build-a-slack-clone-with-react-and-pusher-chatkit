@@ -13,6 +13,9 @@ class App extends Component {
   }
 
   componentDidMount() {
+
+    'Notification' in window && Notification.requestPermission()
+
     const script = document.createElement("script");
     script.src = "//cdn.iframe.ly/embed.js"
     script.async = true;
