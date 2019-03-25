@@ -4,10 +4,7 @@ import MessageList from './components/MessageList'
 import SendMessageForm from './components/SendMessageForm'
 import TypingIndicator from './components/TypingIndicator'
 import WhosOnlineList from './components/WhosOnlineList'
-<<<<<<< HEAD
-=======
 import NavBar from './components/NavBar'
->>>>>>> 61e4814... Styling
 
 class ChatScreen extends Component {
   constructor(props) {
@@ -42,13 +39,10 @@ class ChatScreen extends Component {
       roomId: this.state.currentRoom.id,
       parts: message
     })
-<<<<<<< HEAD
   }
 
   showNotification(presenceUpdate) {
     console.log(presenceUpdate)
-
-    debugger
     if (
       'Notification' in window &&
       presenceUpdate.state.current === 'online' &&
@@ -61,19 +55,6 @@ class ChatScreen extends Component {
         window.focus()
       })
     }
-
-=======
-
-    // // const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
-    // // let linkIndex = text.search(urlRegex)
-    // // let link = text.search(urlRegex)
-
-
-    // this.state.currentUser.sendMessage({
-    //   text,
-    //   roomId: this.state.currentRoom.id,
-    // })
->>>>>>> 61e4814... Styling
   }
 
   componentDidMount() {
