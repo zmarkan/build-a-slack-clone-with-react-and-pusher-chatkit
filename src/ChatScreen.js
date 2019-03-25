@@ -4,6 +4,7 @@ import MessageList from './components/MessageList'
 import SendMessageForm from './components/SendMessageForm'
 import TypingIndicator from './components/TypingIndicator'
 import WhosOnlineList from './components/WhosOnlineList'
+import NavBar from './components/NavBar'
 
 class ChatScreen extends Component {
   constructor(props) {
@@ -42,8 +43,6 @@ class ChatScreen extends Component {
 
   showNotification(presenceUpdate) {
     console.log(presenceUpdate)
-
-    debugger
     if (
       'Notification' in window &&
       presenceUpdate.state.current === 'online' &&
@@ -56,7 +55,6 @@ class ChatScreen extends Component {
         window.focus()
       })
     }
-
   }
 
   componentDidMount() {
@@ -113,9 +111,9 @@ class ChatScreen extends Component {
   render() {
     const styles = {
       container: {
-        height: '100vh',
         display: 'flex',
         flexDirection: 'column',
+        marginTop: '38px',
       },
       chatContainer: {
         display: 'flex',
@@ -137,6 +135,7 @@ class ChatScreen extends Component {
 
     return (
       <div style={styles.container}>
+        <NavBar />
         <div style={styles.chatContainer}>
           <aside style={styles.whosOnlineListContainer}>
             <WhosOnlineList
