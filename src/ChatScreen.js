@@ -71,7 +71,7 @@ class ChatScreen extends Component {
       .then(currentUser => {
         this.setState({ currentUser })
         return currentUser.subscribeToRoomMultipart({
-          roomId: "19389919",
+          roomId: "19389963",
           messageLimit: 20,
           hooks: {
             onMessage: message => {
@@ -95,7 +95,7 @@ class ChatScreen extends Component {
               })
             },
             onPresenceChanged: (state, user) => {
-              this.showNotification({state, user})
+              this.showNotification({ state, user })
               this.forceUpdate()
             },
             onUserJoined: () => this.forceUpdate()

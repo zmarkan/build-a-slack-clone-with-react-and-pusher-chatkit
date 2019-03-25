@@ -25,7 +25,7 @@ app.post('/users', (req, res) => {
     .then((user) => {
 
       chatkit.addUsersToRoom({
-        roomId: "19389919",
+        roomId: "19389963",
         userIds: [username]
       })
 
