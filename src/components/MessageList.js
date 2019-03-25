@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Message from './Message'
 
 class MessagesList extends Component {
   render() {
@@ -29,10 +30,7 @@ class MessagesList extends Component {
         <ul style={styles.ul}>
           {this.props.messages.map((message, index) => (
             <li key={index} style={styles.li}>
-              <div>
-                <span style={styles.senderUsername}>{message.senderId}</span>{' '}
-              </div>
-              <p style={styles.message}>{message.text}</p>
+              <Message message={message}/>
             </li>
           ))}
         </ul>
@@ -40,5 +38,7 @@ class MessagesList extends Component {
     )
   }
 }
+
+
 
 export default MessagesList

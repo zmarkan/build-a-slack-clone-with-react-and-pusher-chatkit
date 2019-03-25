@@ -25,15 +25,34 @@ class ChatScreen extends Component {
   }
 
   sendMessage(text) {
-    this.state.currentUser.sendMessage({
-      text,
+
+    let links = text.match(/\bhttps?:\/\/\S+/gi)
+    let message = []
+    message.push({type: "text/plain", content: text})
+
+    if(links) {
+      message.push({type: "text/html", url: links[0] })
+    }
+
+    this.state.currentUser.sendMultipartMessage({
       roomId: this.state.currentRoom.id,
+      parts: message
     })
+
+    // // const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
+    // // let linkIndex = text.search(urlRegex)
+    // // let link = text.search(urlRegex)
+    
+
+    // this.state.currentUser.sendMessage({
+    //   text,
+    //   roomId: this.state.currentRoom.id,
+    // })
   }
 
   componentDidMount() {
     const chatManager = new Chatkit.ChatManager({
-      instanceLocator: 'YOUR_INSTANCE_LOCATOR',
+      instanceLocator: 'v1:us1:2bec9f06-84eb-45c8-b5f8-814e2e617145',
       userId: this.props.currentUsername,
       tokenProvider: new Chatkit.TokenProvider({
         url: 'http://localhost:3001/authenticate',
@@ -44,30 +63,33 @@ class ChatScreen extends Component {
       .connect()
       .then(currentUser => {
         this.setState({ currentUser })
-        return currentUser.subscribeToRoom({
-          roomId: 'YOUR_ROOM_ID',
+        return currentUser.subscribeToRoomMultipart({
+          roomId: "19389919",
           messageLimit: 100,
           hooks: {
             onMessage: message => {
               this.setState({
-                messages: [...this.state.messages, message],
+                messages: [...this.state.messages, message]
               })
             },
-            onUserStartedTyping: user => {
-              this.setState({
-                usersWhoAreTyping: [...this.state.usersWhoAreTyping, user.name],
-              })
-            },
-            onUserStoppedTyping: user => {
-              this.setState({
-                usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
-                  username => username !== user.name
-                ),
-              })
-            },
+            // onUserStartedTyping: user => {
+            //   this.setState({
+            //     usersWhoAreTyping: [
+            //       ...this.state.usersWhoAreTyping,
+            //       user.name
+            //     ]
+            //   })
+            // },
+            // onUserStoppedTyping: user => {
+            //   this.setState({
+            //     usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
+            //       username => username !== user.name
+            //     )
+            //   })
+            // },
             onPresenceChange: () => this.forceUpdate(),
-            onUserJoined: () => this.forceUpdate(),
-          },
+            onUserJoined: () => this.forceUpdate()
+          }
         })
       })
       .then(currentRoom => {
@@ -115,7 +137,9 @@ class ChatScreen extends Component {
               messages={this.state.messages}
               style={styles.chatList}
             />
-            <TypingIndicator usersWhoAreTyping={this.state.usersWhoAreTyping} />
+            <TypingIndicator
+              usersWhoAreTyping={this.state.usersWhoAreTyping}
+            />
             <SendMessageForm
               onSubmit={this.sendMessage}
               onChange={this.sendTypingEvent}

@@ -12,6 +12,13 @@ class App extends Component {
     this.onUsernameSubmitted = this.onUsernameSubmitted.bind(this)
   }
 
+  componentDidMount() {
+    const script = document.createElement("script");
+    script.src = "//cdn.iframe.ly/embed.js"
+    script.async = true;
+    document.body.appendChild(script);
+  }
+
   onUsernameSubmitted(username) {
     fetch('http://localhost:3001/users', {
       method: 'POST',
