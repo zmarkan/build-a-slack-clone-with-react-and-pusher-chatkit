@@ -71,7 +71,7 @@ class ChatScreen extends Component {
       .then(currentUser => {
         this.setState({ currentUser })
         return currentUser.subscribeToRoomMultipart({
-          roomId: "19389963",
+          roomId: "19389964",
           messageLimit: 20,
           hooks: {
             onMessage: message => {
@@ -111,6 +111,7 @@ class ChatScreen extends Component {
   render() {
     const styles = {
       container: {
+        height: '98vh',
         display: 'flex',
         flexDirection: 'column',
         marginTop: '38px',
