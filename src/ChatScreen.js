@@ -75,9 +75,16 @@ class ChatScreen extends Component {
           messageLimit: 20,
           hooks: {
             onMessage: message => {
-              this.setState({
-                messages: [...this.state.messages, message]
-              })
+              console.log(message)
+              try{
+                this.setState({
+                  messages: [ ...this.state.messages, message ]
+                })
+              }
+              catch(e){
+                console.log(e)
+              }
+              
             },
             onUserStartedTyping: user => {
               this.setState({

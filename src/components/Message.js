@@ -35,41 +35,47 @@ class Message extends Component {
         }
 
         let message = this.props.message
-        let text = message.parts[ 0 ].payload.content
-
         console.log(message)
 
-        let hasLink = message.parts.length > 1
-        let link = ""
-        if (hasLink && this.state.linkEmbed.length <= 0 ) {
-            link = encodeURIComponent(message.parts[1].payload.url)
-            let iframelyAPICall = `https://iframe.ly/api/oembed?api_key=2ca0506ea6b3b12f93913b&iframe=1&omit_script=1&url=${link}`
+        if(message.parts){
+            let text = message.parts[ 0 ].payload.content
 
-            console.log(iframelyAPICall)
+            // console.log(message)
 
-            fetch(iframelyAPICall).then(response =>
-                response.json()
-            ).then(response => {
-                this.setState({ linkEmbed: response.html })
-            }
-        )
-        }
+            let hasLink = message.parts.length > 1
+            let link = ""
+            if (hasLink && this.state.linkEmbed.length <= 0) {
+                link = encodeURIComponent(message.parts[ 1 ].payload.url)
+                let iframelyAPICall = `https://iframe.ly/api/oembed?api_key=2ca0506ea6b3b12f93913b&iframe=1&omit_script=1&url=${link}`
 
-        return (
-            <div>
+                console.log(iframelyAPICall)
 
-                <div>
-                    <span style={ styles.senderUsername }>{ message.senderId }</span>{ ' ' }
-                </div>
-                <p style={ styles.message }>{ text }</p>
-
-                { hasLink && this.state.linkEmbed &&
-                    <div dangerouslySetInnerHTML={ this.getIframelyHtml() } />
+                fetch(iframelyAPICall).then(response =>
+                    response.json()
+                ).then(response => {
+                    this.setState({ linkEmbed: response.html })
                 }
-            </div>
+                )
+            }
 
-        )
-    }
+            return (
+                <div>
+
+                    <div>
+                        <span style={ styles.senderUsername }>{ message.senderId }</span>{ ' ' }
+                    </div>
+                    <p style={ styles.message }>{ text }</p>
+
+                    { hasLink && this.state.linkEmbed &&
+                        <div dangerouslySetInnerHTML={ this.getIframelyHtml() } />
+                    }
+                </div>
+
+            )
+        }
+        else return <div/>
+        }
+       
 
 }
 
